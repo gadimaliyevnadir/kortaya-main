@@ -1,0 +1,17 @@
+stages:
+  - deploy_proj
+
+deploy_proj:
+  stage: deploy_proj
+  script:
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - sudo cp -rf * /home/kortaya/public_html/
+    - sudo chown -R $USER /home/kortaya/public_html
+    - /usr/bin/composer update -d /home/kortaya/public_html 
+    - sudo chown -R kortaya:kortaya /home/kortaya/
+    
+  only:
+    - main
+  tags:
+    - korta
+    - shell
